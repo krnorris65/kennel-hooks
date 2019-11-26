@@ -8,6 +8,8 @@ import AnimalEditForm from './animal/AnimalEditForm'
 import Login from './auth/Login'
 import useSimpleAuth from '../hooks/ui/useSimpleAuth'
 
+import EmployeeList from './employee/EmployeeList'
+import EmployeeWithAnimals from './employee/EmployeeWithAnimals'
 
 const ApplicationViews = props => {
     const {isAuthenticated} = useSimpleAuth()
