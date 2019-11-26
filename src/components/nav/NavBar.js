@@ -17,10 +17,6 @@ const NavBar = props => {
                     {isAuthenticated() ?
                         <>
                             <li><Link className="nav-link" to="/animals">Animals</Link></li>
-                            <li>Locations</li>
-                            <li>Employees</li>
-                            <li>Owners</li>
-                            <li><a onClick={props.clearUser}>Logout</a></li>
                         </>
                         : null}
                             <li>Locations</li>
