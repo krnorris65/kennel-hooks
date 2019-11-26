@@ -1,105 +1,73 @@
-import React, { Component } from "react"
-import AnimalManager from "../../modules/AnimalManager"
-import "./AnimalForm.css"
-import EmployeeManager from "../../modules/EmployeeManager";
+import React, { useEffect, useState, useRef } from 'react'
+import AnimalManager from '../../modules/AnimalManager'
 
-class AnimalEditForm extends Component {
-    //set the initial state
-    state = {
-        animalName: "",
-        breed: "",
-        employeeId: 0,
-        employees: [],
-        loadingStatus: true,
-    };
+const AnimalEditForm = props => {
+    const [loadingStatus, setLoadingStatus] = useState(true)
+    const updateName = useRef()
+    const updateBreed = useRef()
 
-    handleFieldChange = evt => {
-        const stateToChange = {}
-        stateToChange[evt.target.id] = evt.target.value
-        this.setState(stateToChange)
-    }
-
-    updateExistingAnimal = evt => {
-        evt.preventDefault()
-        this.setState({ loadingStatus: true });
-        const editedAnimal = {
-            id: this.props.match.params.animalId,
-            name: this.state.animalName,
-            breed: this.state.breed,
-            employeeId: parseInt(this.state.employeeId)
-        };
-
-        AnimalManager.update(editedAnimal)
-            .then(() => this.props.history.push("/animals"))
-    }
-
-    componentDidMount() {
-        AnimalManager.get(this.props.match.params.animalId)
+    const getUpdateAnimal = () => {
+        AnimalManager.get(props.match.params.animalId)
             .then(animal => {
-                this.setState({
-                    animalName: animal.name,
-                    breed: animal.breed,
-                    employeeId: animal.employeeId,
-                    loadingStatus: false,
-                });
-            });
-        EmployeeManager.getAll()
-        .then(employees => this.setState({employees: employees}))
+                setLoadingStatus(false)
+                updateName.current.value = animal.name
+                updateBreed.current.value = animal.breed
+            })
+    }
+    useEffect(getUpdateAnimal, [])
+
+
+
+    const editAnimal = () => {
+        if (updateName.current.value === "" || updateBreed.current.value === "") {
+            window.alert("Please input an animal name and breed");
+        } else {
+            setLoadingStatus(true)
+            const editedAnimal = {
+                id: props.match.params.animalId,
+                name: updateName.current.value,
+                breed: updateBreed.current.value
+            }
+
+            AnimalManager.update(editedAnimal)
+            .then(() => props.history.push("/animals"))
+        }
     }
 
-    render() {
-        return (
-            <>
-                <form>
-                    <fieldset>
-                        <div className="formgrid">
-                            <input
-                                type="text"
-                                required
-                                className="form-control"
-                                onChange={this.handleFieldChange}
-                                id="animalName"
-                                value={this.state.animalName}
-                            />
-                            <label htmlFor="animalName">Animal name</label>
+    return (
+        <>
+            <form>
+                <fieldset>
+                    <div className="formgrid">
+                        <input
+                            type="text"
+                            required
+                            className="form-control"
+                            id="animalName"
+                            ref={updateName}
+                        />
+                        <label htmlFor="animalName">Animal name</label>
 
-                            <input
-                                type="text"
-                                required
-                                className="form-control"
-                                onChange={this.handleFieldChange}
-                                id="breed"
-                                value={this.state.breed}
-                            />
-                            <label htmlFor="breed">Breed</label>
-
-                            <select
-                                className="form-control"
-                                id="employeeId"
-                                value={this.state.employeeId}
-                                onChange={this.handleFieldChange}
-                            >
-                                {this.state.employees.map(employee =>
-                                    <option key={employee.id} value={employee.id}>
-                                        {employee.name}
-                                    </option>
-                                )}
-                            </select>
-                            <label htmlFor="employeeId">Employee</label>
-
-                        </div>
-                        <div className="alignRight">
-                            <button
-                                type="button" disabled={this.state.loadingStatus}
-                                onClick={this.updateExistingAnimal}
-                                className="btn btn-primary"
-                            >Submit</button>
-                        </div>
-                    </fieldset>
-                </form>
-            </>
-        );
-    }
+                        <input
+                            type="text"
+                            required
+                            className="form-control"
+                            id="breed"
+                            ref={updateBreed}
+                        />
+                        <label htmlFor="breed">Breed</label>
+                    </div>
+                    <div className="alignRight">
+                        <button
+                            type="button" disabled={loadingStatus}
+                            onClick={editAnimal}
+                            className="btn btn-primary"
+                        >Submit</button>
+                    </div>
+                </fieldset>
+            </form>
+        </>
+    )
 }
 
 export default AnimalEditForm

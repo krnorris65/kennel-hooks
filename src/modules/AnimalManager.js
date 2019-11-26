@@ -24,11 +24,11 @@ export default {
     },
     update(editedAnimal) {
         return fetch(`${remoteURL}/animals/${editedAnimal.id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(editedAnimal)
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(editedAnimal)
         }).then(data => data.json());
-    }
+      }
 }
