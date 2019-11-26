@@ -1,32 +1,29 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import EmployeeCard from "./EmployeeCard"
 import EmployeeManager from '../../modules/EmployeeManager'
 
-class EmployeeList extends Component {
-    state = {
-        employees: []
-    }
+const EmployeeList = props => {
+    const [employees, setEmployees] = useState([])
 
-    componentDidMount() {
+    const getEmployees = () => {
         EmployeeManager.getAll()
             .then(employees => {
-                this.setState({
-                    employees: employees
-                })
+                setEmployees(employees)
             })
     }
-    render() {
-        return (
-            <React.Fragment>
 
-                <section className="employees">
-                    {
-                        this.state.employees.map(employee => <EmployeeCard key={employee.id} employee={employee} {...this.props}/>)
-                    }
-                </section>
-            </React.Fragment>
-        )
-    }
+    useEffect(getEmployees, [])
+    return (
+        <React.Fragment>
+
+            <section className="employees">
+                {
+                    employees.map(employee => <EmployeeCard key={employee.id} employee={employee} {...props} />)
+                }
+            </section>
+        </React.Fragment>
+    )
+
 }
 
 export default EmployeeList

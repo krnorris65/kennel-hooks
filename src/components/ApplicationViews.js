@@ -62,7 +62,7 @@ const ApplicationViews = props => {
                     return <Redirect to="/login" />
                 }
             }} />
-            <Route exact path="/employees/:employeeId(\d+)" render={(props) => {
+            <Route exact path="/employees/:employeeId(\d+)/details" render={(props) => {
                 if (isAuthenticated()) {
                     return <EmployeeWithAnimals employeeId={parseInt(props.match.params.employeeId)} {...props} />
                 } else {
