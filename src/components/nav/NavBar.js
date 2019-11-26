@@ -22,7 +22,7 @@ const NavBar = props => {
                             <li>Locations</li>
                     {isAuthenticated() ?
                         <>
-                            <li>Employees</li>
+                            <li><Link className="nav-link" to="/employees">Employees</Link></li>
                             <li>Owners</li>
                             <li><a onClick={() => {
                                 logout()

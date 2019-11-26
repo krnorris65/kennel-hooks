@@ -12,7 +12,7 @@ import EmployeeList from './employee/EmployeeList'
 import EmployeeWithAnimals from './employee/EmployeeWithAnimals'
 
 const ApplicationViews = props => {
-    const {isAuthenticated} = useSimpleAuth()
+    const { isAuthenticated } = useSimpleAuth()
 
     console.log(isAuthenticated())
 
@@ -50,6 +50,21 @@ const ApplicationViews = props => {
             <Route path="/animals/:animalId(\d+)/edit" render={(props) => {
                 if (isAuthenticated()) {
                     return <AnimalEditForm {...props} />
+                } else {
+                    return <Redirect to="/login" />
+                }
+            }} />
+
+            <Route exact path="/employees" render={(props) => {
+                if (isAuthenticated()) {
+                    return <EmployeeList {...props} />
+                } else {
+                    return <Redirect to="/login" />
+                }
+            }} />
+            <Route exact path="/employees/:employeeId(\d+)" render={(props) => {
+                if (isAuthenticated()) {
+                    return <EmployeeWithAnimals employeeId={parseInt(props.match.params.employeeId)} {...props} />
                 } else {
                     return <Redirect to="/login" />
                 }
