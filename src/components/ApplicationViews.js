@@ -14,8 +14,6 @@ import EmployeeWithAnimals from './employee/EmployeeWithAnimals'
 const ApplicationViews = props => {
     const { isAuthenticated } = useSimpleAuth()
 
-    console.log(isAuthenticated())
-
     return (
         <React.Fragment>
             <Route exact path="/" render={(props) => {

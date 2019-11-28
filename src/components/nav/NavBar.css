@@ -33,6 +33,6 @@ small {
     color: cornsilk;
   }
   
-  nav .container a:hover {
+  nav .container a:hover,  nav .container span:hover{
     color: maroon;
   }

@@ -16,7 +16,6 @@ const useSimpleAuth = () => {
     }
 
     const login = creds => {
-        console.log("login")
         localStorage.setItem("credentials", JSON.stringify(creds))
         setLoggedIn(true)
     }

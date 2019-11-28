@@ -24,12 +24,12 @@ const NavBar = props => {
                         <>
                             <li><Link className="nav-link" to="/employees">Employees</Link></li>
                             <li>Owners</li>
-                            <li><a onClick={() => {
+                            <li><span onClick={() => {
                                 logout()
                                 props.history.push({
                                     pathname: "/"
                                 })
-                            }}>Logout</a></li>
+                            }}>Logout</span></li>
                         </>
                         : <li><Link className="nav-link" to="/login">Login</Link></li>}
 
