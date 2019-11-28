@@ -1,4 +1,6 @@
-import {useState} from 'react'
+import { useState } from 'react'
+
+const remoteURL = "http://localhost:5002"
 
 
 const useSimpleAuth = () => {
@@ -10,14 +12,41 @@ const useSimpleAuth = () => {
     }
 
     const register = userInfo => {
-        //post user to database
-        //set localStorage
-        //change loggedIn to true
+        return fetch(`${remoteIRL}/register`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(userInfo)
+        })
+            .then(res => res.json())
+            .then(res => {
+                if ("token" in res) {
+                    localStorage.setItem("credentials", res.token)
+                    setIsLoggedIn(true)
+                }
+            })
     }
 
     const login = creds => {
-        localStorage.setItem("credentials", JSON.stringify(creds))
-        setLoggedIn(true)
+        // localStorage.setItem("credentials", JSON.stringify(creds))
+        // setLoggedIn(true)
+        return fetch(`${remoteIRL}/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(userInfo)
+        })
+            .then(res => res.json())
+            .then(res => {
+                if ("token" in res) {
+                    localStorage.setItem("credentials", res.token)
+                    setIsLoggedIn(true)
+                }
+            })
     }
 
     const logout = () => {
@@ -25,7 +54,7 @@ const useSimpleAuth = () => {
         localStorage.removeItem("credentials")
     }
 
-    return {isAuthenticated, logout, login, register}
+    return { isAuthenticated, logout, login, register }
 }
 
 export default useSimpleAuth
