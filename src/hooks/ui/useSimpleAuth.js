@@ -24,7 +24,6 @@ const useSimpleAuth = () => {
             .then(res => {
                 console.log("register", res)
                 if ("accessToken" in res) {
-                    console.log("true")
                     localStorage.setItem("credentials", res.accessToken)
                     setLoggedIn(true)
                 }

@@ -14,7 +14,9 @@ const Login = props => {
         }
 
         login(userInfo)
-        props.history.push("/")
+        .then( () => {
+            props.history.push("/")
+        })
 
     }
 

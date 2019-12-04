@@ -14,7 +14,9 @@ const Register = props => {
         }
 
         register(userInfo)
-        props.history.push("/")
+        .then( () => {
+            props.history.push("/")
+        })
     }
 
     return (
