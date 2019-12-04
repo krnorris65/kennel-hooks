@@ -12,7 +12,7 @@ const useSimpleAuth = () => {
     }
 
     const register = userInfo => {
-        return fetch(`${remoteIRL}/register`, {
+        return fetch(`${remoteURL}/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -24,15 +24,16 @@ const useSimpleAuth = () => {
             .then(res => {
                 if ("token" in res) {
                     localStorage.setItem("credentials", res.token)
-                    setIsLoggedIn(true)
+                    setLoggedIn(true)
                 }
             })
     }
 
-    const login = creds => {
+    const login = userInfo => {
         // localStorage.setItem("credentials", JSON.stringify(creds))
         // setLoggedIn(true)
-        return fetch(`${remoteIRL}/login`, {
+        console.log(userInfo)
+        return fetch(`${remoteURL}/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -42,9 +43,10 @@ const useSimpleAuth = () => {
         })
             .then(res => res.json())
             .then(res => {
+                console.log(res)
                 if ("token" in res) {
                     localStorage.setItem("credentials", res.token)
-                    setIsLoggedIn(true)
+                    setLoggedIn(true)
                 }
             })
     }
