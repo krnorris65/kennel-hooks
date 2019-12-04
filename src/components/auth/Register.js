@@ -10,6 +10,7 @@ const Register = props => {
         evt.preventDefault()
         const userInfo = {
             email: email.current.value,
+            username: email.current.value,
             password: password.current.value
         }
 
