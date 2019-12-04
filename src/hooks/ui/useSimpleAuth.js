@@ -22,8 +22,10 @@ const useSimpleAuth = () => {
         })
             .then(res => res.json())
             .then(res => {
-                if ("token" in res) {
-                    localStorage.setItem("credentials", res.token)
+                console.log("register", res)
+                if ("accessToken" in res) {
+                    console.log("true")
+                    localStorage.setItem("credentials", res.accessToken)
                     setLoggedIn(true)
                 }
             })
@@ -32,7 +34,6 @@ const useSimpleAuth = () => {
     const login = userInfo => {
         // localStorage.setItem("credentials", JSON.stringify(creds))
         // setLoggedIn(true)
-        console.log(userInfo)
         return fetch(`${remoteURL}/login`, {
             method: "POST",
             headers: {
@@ -43,9 +44,9 @@ const useSimpleAuth = () => {
         })
             .then(res => res.json())
             .then(res => {
-                console.log(res)
-                if ("token" in res) {
-                    localStorage.setItem("credentials", res.token)
+                console.log("login", res)
+                if ("accessToken" in res) {
+                    localStorage.setItem("credentials", res.accessToken)
                     setLoggedIn(true)
                 }
             })

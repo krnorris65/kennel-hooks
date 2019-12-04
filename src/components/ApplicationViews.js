@@ -6,6 +6,7 @@ import AnimalDetail from './animal/AnimalDetail'
 import AnimalForm from './animal/AnimalForm'
 import AnimalEditForm from './animal/AnimalEditForm'
 import Login from './auth/Login'
+import Register from './auth/Register'
 import useSimpleAuth from '../hooks/ui/useSimpleAuth'
 
 import EmployeeList from './employee/EmployeeList'
@@ -22,6 +23,9 @@ const ApplicationViews = props => {
 
             <Route path="/login" render={(props) => {
                 return <Login {...props} />
+            }} />
+            <Route path="/register" render={(props) => {
+                return <Register {...props} />
             }} />
 
             <Route exact path="/animals" render={(props) => {
